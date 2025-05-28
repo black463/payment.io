@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Digital Mang Lz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            padding: 10px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 16px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .app-logo {
+            width: 80px;
+            margin: 0 auto;
+            display: block;
+        }
+        .app-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0 5px;
+        }
+        .company-name {
+            text-align: center;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .app-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .download-btn {
+            display: block;
+            width: 80%;
+            margin: 20px auto;
+            padding: 12px;
+            background: linear-gradient(to right, #6a11cb, #fc6767);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-left: 4px solid #6a11cb;
+            padding-left: 10px;
+        }
+        .screenshots {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .screenshots img {
+            width: 22%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .keunggulan-box {
+            background: linear-gradient(to right, #e0e0e0, #fdfdfd);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+        .keunggulan-box::before {
+            content: '\26A1';
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: #ff7f50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Download NR PAYMENT - Aplikasi</h1>
+    </header>
+    <div class="container">
+        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/20250528_121627-1.png?text=DK" alt="Logo" class="app-logo">
+        <div class="app-title">Nr Payment</div>
+        <div class="company-name">PT.Aceh Multi Payment</div><div class="app-info">
+        <div>59 Rb+ Download</div>
+        <div>Versi 2.0</div>
+        <div style="color: green; font-weight: bold;">Rating 4.5+</div>
+    </div>
+
+    <a href="https://download.bukaolshop.com/files/apk/payment02.apk" class="download-btn">Download Sekarang</a>
+
+    <div class="section-title">Tampilan Aplikasi</div>
+    <div class="screenshots">
+        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/screenshot_2025-05-28-12-27-38-748_com.payment02.jpg?text=SS1" alt="SS1">
+        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/screenshot_2025-05-28-12-28-15-201_com.payment02.jpg?text=SS2" alt="SS2">
+        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/screenshot_2025-05-28-12-27-49-261_com.payment02.jpg?text=SS3" alt="SS3">
+        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/screenshot_2025-05-28-12-27-54-774_com.payment02.jpg?text=SS4" alt="SS4">
+    </div>
+
+    <div class="section-title">Keunggulan NR PAYMENT</div>
+    <div class="keunggulan-box">
+NR PAYMENT menawarkan harga termurah untuk semua produk PPOB dengan keuntungan berlipat. Transaksi cepat, sistem stabil, dan dukungan pelanggan 24 jam siap membantu Anda!
+        <!-- Tambahkan konten keunggulan di sini -->
+    </div>
+</div>
+
+</body>
+</html>
