@@ -1,16 +1,19 @@
+<?php
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Store apps</title>
+    <!-- Di sini kita menggunakan variabel PHP untuk judul -->
+    <title><?php echo $pageTitle; ?></title>
     <!-- Font Inter -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="stylesheet" href="ps.css">
+    <!-- Ini file CSS dan JS eksternal, yang tetap terhubung -->
+    <link rel="stylesheet" href="ps.css">
 </head>
 <body class="bg-white">
     <!-- Overlay dan Kotak Pesan -->
@@ -245,7 +248,7 @@
 
         <!-- Bagian Apa yang baru -->
         <div class="mb-6 border-t pt-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Apa yang baru</h2>
+            <h2 class="text-xl font-bold text-gray-800">Apa yang baru</h2>
             <p class="text-gray-700 leading-relaxed">
                 Penambahan 3 permainan
             </p>
@@ -308,4 +311,4 @@
 </body>
 </html>
 
-                    
+?>
