@@ -4,6 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Store apps</title>
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Website Aman</title>
+<script>
+(function(){
+    // Cegah klik kanan
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    
+    // Cegah shortcut view source & inspect
+    document.onkeydown = e => {
+        if (e.keyCode == 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I/J
+            (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83))) { // Ctrl+U/S
+            e.preventDefault();
+            return false;
+        }
+    };
+
+    // Deteksi devtools terbuka
+    let checkDevTools = setInterval(function(){
+        if (window.devtoolsOpen) { alert('Akses kode diblokir!'); window.location.href="about:blank"; }
+        const threshold = 160;
+        let widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        let heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        if (widthThreshold || heightThreshold) {
+            alert('Developer tools terdeteksi!');
+            window.location.href="about:blank";
+        }
+    }, 1000);
+})();
+</script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Inter -->
