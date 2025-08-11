@@ -10,61 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .rating-bar-container {
-            width: 100%;
-            background-color: #e5e7eb;
-            border-radius: 9999px;
-            height: 8px;
-            position: relative;
-        }
-        .rating-bar {
-            height: 100%;
-            background-color: #16a34a;
-            border-radius: 9999px;
-        }
-        .preview-images-container {
-            display: flex;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 1rem;
-        }
-        .preview-image {
-            min-width: 150px;
-            max-width: 200px;
-            height: auto;
-        }
-        .app-icon {
-            width: 96px;
-            height: 96px;
-        }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            display: none;
-            text-align: center;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-    </style>
+      <link rel="stylesheet" href="ps.css">
 </head>
 <body class="bg-white">
     <!-- Overlay dan Kotak Pesan -->
@@ -358,62 +304,8 @@
         </div>
     </div>
 
-    <script>
-        // Fungsi untuk menampilkan kotak pesan custom
-        function showMessageBox(message) {
-            document.getElementById('messageText').innerText = message;
-            document.getElementById('messageBox').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-        
-        // Fungsi untuk menutup kotak pesan
-        function closeMessageBox() {
-            document.getElementById('messageBox').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        // Teks untuk deskripsi yang bisa diperluas
-        const descriptionContent = document.getElementById('description-content');
-        const toggleButton = document.getElementById('toggle-description');
-        const readMoreButton = document.getElementById('read-more-button');
-        let isExpanded = false;
-
-        function toggleDescription() {
-            isExpanded = !isExpanded;
-            if (isExpanded) {
-                descriptionContent.style.maxHeight = descriptionContent.scrollHeight + 'px';
-                toggleButton.innerHTML = `<i class="fas fa-chevron-up text-sm"></i>`;
-                readMoreButton.style.display = 'block';
-            } else {
-                descriptionContent.style.maxHeight = '80px';
-                toggleButton.innerHTML = `<i class="fas fa-chevron-right text-sm"></i>`;
-                readMoreButton.style.display = 'none';
-            }
-        }
-
-        // Event listener untuk tombol toggle
-        toggleButton.addEventListener('click', toggleDescription);
-
-        // Menambahkan fungsionalitas anti-copy yang lebih ramah
-        (function(){
-            // Cegah klik kanan
-            document.addEventListener('contextmenu', e => {
-                e.preventDefault();
-                showMessageBox('Akses klik kanan diblokir.');
-            });
-            
-            // Cegah shortcut view source & inspect
-            document.onkeydown = e => {
-                if (e.keyCode == 123 || // F12
-                    (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I/J
-                    (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83))) { // Ctrl+U/S
-                    e.preventDefault();
-                    showMessageBox('Akses kode diblokir!');
-                    return false;
-                }
-            };
-        })();
-    </script>
+    <script src="ps.js"></script>
 </body>
 </html>
 
+                    
