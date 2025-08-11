@@ -1,0 +1,39 @@
+ body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Warna latar belakang */
+        }
+        .container {
+            max-width: 640px;
+        }
+        .app-icon {
+            width: 80px;
+            height: 80px;
+        }
+        .stats-item {
+            flex: 1;
+        }
+        /* Mengatur agar gambar pratinjau bisa discroll secara horizontal */
+        .preview-images-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        .preview-images-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        /* Style untuk progress bar rating */
+        .rating-bar-container {
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            height: 8px;
+        }
+        .rating-bar {
+            background-color: #22c55e;
+            height: 100%;
+            border-radius: 9999px;
+        }
+        .preview-image {
+            width: 150px;
+            height: 266px;
+        }
