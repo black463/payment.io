@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kembali</title>
+  <title>TOKO NR REAL</title>
   <link rel="icon" type="image/x-icon" href="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/20250512_234318.jpg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
@@ -124,6 +124,26 @@
 </head>
 <body>
 
+<!-- Modal Persetujuan (Baru Ditambahkan) -->
+<div id="consentModal" class="fixed inset-0 bg-black bg-opacity-70 z-[100] flex justify-center items-center hidden p-4">
+  <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 sm:p-8 transform transition-all duration-300 scale-100">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+      <i class="fas fa-handshake text-blue-600 mr-3"></i>
+      Persetujuan Pengguna
+    </h3>
+    <p class="text-gray-600 mb-6 text-sm sm:text-base">
+      Dengan melanjutkan, Anda menyetujui bahwa produk yang ditampilkan di **TOKO NR REAL** bersumber dari **berbagai platform dan pihak ketiga** (seperti Bukalapak, Tokopedia, dll.). 
+      Kami hanya bertindak sebagai perantara pemasaran.
+    </p>
+    <p class="text-gray-600 mb-6 text-sm font-semibold">
+      Pastikan Anda membaca deskripsi lengkap dan persyaratan layanan di platform sumber sebelum melakukan pembelian.
+    </p>
+    <button id="agreeButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/50">
+      Saya Mengerti dan Setuju
+    </button>
+  </div>
+</div>
+
 <!-- Sidebar Overlay (Untuk menutup saat klik di luar) -->
 <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeSidebar()"></div>
 
@@ -229,6 +249,7 @@
     let currentFilter = 'semua';
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
+    const CONSENT_KEY = 'userAgreedToPlatformTerms'; // Kunci untuk localStorage
     
     // --- FUNGSI UTILITY ---
 
@@ -282,6 +303,31 @@
         });
     }
 
+    // --- FUNGSI MODAL PERSETUJUAN BARU ---
+    
+    function showConsentModal() {
+        const modal = document.getElementById('consentModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Mencegah scrolling latar belakang
+        }
+    }
+
+    function hideConsentModal() {
+        const modal = document.getElementById('consentModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Mengaktifkan scrolling kembali
+        }
+    }
+
+    function agreeAndCloseModal() {
+        localStorage.setItem(CONSENT_KEY, 'true');
+        hideConsentModal();
+        // Setelah setuju, muat produk
+        loadProducts(); 
+    }
+    
     // --- FUNGSI TAMPILAN ---
 
     // Fungsi untuk membuat tombol kategori dan menambahkannya ke kontainer
@@ -473,10 +519,24 @@
       // 1. Render kategori filter (desktop dan sidebar)
       renderCategoryButtons(); 
       
-      // 2. Muat produk (API + Manual)
-      loadProducts();
+      // 2. Setup button persetujuan
+      const agreeButton = document.getElementById('agreeButton');
+      if (agreeButton) {
+          agreeButton.addEventListener('click', agreeAndCloseModal);
+      }
 
-      // 3. Attach event listener for menu button
+      // 3. Cek Persetujuan Pengguna (localStorage)
+      const hasAgreed = localStorage.getItem(CONSENT_KEY) === 'true';
+
+      if (!hasAgreed) {
+          showConsentModal();
+          // Produk tidak dimuat sampai pengguna setuju
+      } else {
+          // Jika sudah setuju, langsung muat produk
+          loadProducts();
+      }
+
+      // 4. Attach event listener for menu button
       const menuToggle = document.getElementById('menuToggle');
       if (menuToggle) {
           menuToggle.addEventListener('click', openSidebar);
