@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kembali</title>
+  <link rel="icon" type="image/x-icon" href="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/05/20250512_234318.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN for modern styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for better visual appeal and mobile responsiveness */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    
+    :root {
+      --primary-color: #2563eb; /* Blue-600 */
+      --secondary-color: #f59e0b; /* Amber-500 */
+      --text-color: #1f2937; /* Gray-800 */
+      --bg-color: #f9fafb; /* Gray-50 */
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+    
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .label {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      margin-bottom: 8px;
+      color: white;
+      background-color: var(--secondary-color);
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #9ca3af; /* Gray-400 */
+      font-size: 0.875rem;
+      margin-left: 8px;
+    }
+    
+    .final-price {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    /* Style untuk Tombol Kategori di Desktop (horizontal) */
+    .kategori-container.sm\:flex button {
+        transition: all 0.2s ease;
+        padding: 8px 16px;
+        border-radius: 9999px;
+        font-weight: 600;
+        margin-right: 8px;
+        border: 1px solid #d1d5db;
+        background-color: #f3f4f6;
+        color: #4b5563;
+        white-space: nowrap; /* Mencegah tombol melompat baris */
+    }
+
+    .kategori-container.sm\:flex button.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Style untuk Tombol Kategori di Sidebar (vertical) */
+    .kategori-container.flex-col button {
+        transition: all 0.2s ease;
+        padding: 10px 12px;
+        width: 100%;
+        text-align: left;
+        border: none; 
+        background-color: transparent;
+        color: var(--text-color);
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .kategori-container.flex-col button:hover {
+        background-color: #f3f4f6;
+    }
+
+    .kategori-container.flex-col button.active {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 600;
+    }
+
+    /* Memastikan Kategori Desktop dapat di-scroll horizontal */
+    #categoryButtonsDesktop {
+        overflow-x: auto;
+        padding-bottom: 8px; /* Ruang untuk scrollbar */
+        -webkit-overflow-scrolling: touch; /* Untuk iOS smooth scrolling */
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Sidebar Overlay (Untuk menutup saat klik di luar) -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="closeSidebar()"></div>
+
+<!-- Sidebar Menu -->
+<div id="sidebar" class="fixed top-0 left-0 w-64 max-w-[80%] h-full bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 p-4 overflow-y-auto">
+  <div class="flex justify-between items-center border-b pb-3 mb-4">
+    <h2 class="text-xl font-bold text-gray-800">Filter Kategori</h2>
+    <button onclick="closeSidebar()" class="text-gray-500 hover:text-red-500 text-xl">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  
+  <!-- Kategori akan diisi di sini oleh JavaScript -->
+  <div class="kategori-container flex flex-col gap-2" id="categoryButtonsSidebar"></div>
+</div>
+
+<div class="container mx-auto p-4 max-w-7xl" id="mainContent">
+  
+  <!-- Header dengan Menu Mobile dan Pencarian -->
+  <div class="header-container mb-6 flex items-center space-x-4">
+    <button id="menuToggle" class="text-gray-800 text-2xl p-2 rounded-lg sm:hidden hover:bg-gray-100 transition-colors flex-shrink-0">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Pencarian (Selalu terlihat, mengambil sisa ruang) -->
+    <div class="search-container flex-grow">
+      <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="filterProduk()" 
+             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
+    </div>
+  </div>
+
+  <!-- Kategori Desktop (Hanya muncul di layar besar) -->
+  <div class="kategori-container hidden sm:flex flex-wrap gap-2 mb-8" id="categoryButtonsDesktop">
+    <!-- Kategori akan diisi di sini oleh JavaScript -->
+  </div>
+
+  <!-- Produk Grid (Akan diisi oleh JavaScript) -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4" id="produkList">
+    <!-- Loading indicator -->
+    <div class="col-span-full text-center p-8 text-gray-500" id="loadingIndicator">
+        <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+        <p>Memuat produk...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+    // --- KONFIGURASI API DAN KATEGORI ---
+    const API_TOKEN = "eyJhcHAiOiI5MzE1MSIsImF1dGgiOiIyMDIyMDExNyIsInNpZ24iOiJVK1FOYks5V3JZRlh1T2tNUmJFcGFBPT0ifQ==";
+    const API_URL_BASE = "https://openapi.bukaolshop.net/v1/app/produk";
+    
+    // TAMBAHKAN SEMUA ID KATEGORI API ANDA DI SINI!
+    const CATEGORY_IDS = [
+        "590752", // Kategori 1 (yang lama)
+        "0", // Contoh Kategori ID Baru 2
+        "0", // Contoh Kategori ID Baru 3
+        // Tambahkan ID kategori lain jika ada
+    ];
+
+    // DEFINISI KATEGORI UTAMA (Filter berdasarkan label)
+    const MAIN_CATEGORIES = [
+        { key: 'semua', label: 'Semua Produk' },
+        { key: 'digital', label: 'Digital (Aplikasi/SC)' },
+        { key: 'ebook', label: 'E-book (Panduan/SC)' },
+        { key: 'kelas', label: 'Kelas (Edukasi)' }, // Kategori manual baru
+        { key: 'diskon', label: 'Diskon (Promo)' }
+    ];
+    
+    // --- Produk Manual Tambahan ---
+    const manualProducts = [
+      {
+        nama_produk: "Laptop murah",
+        url_produk: "https://vt.tokopedia.com/t/ZSHW4fjbcmRAY-4IO3J/",
+        url_gambar_produk: "https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/07/img_20250709_1712527294936043346072263.jpg",
+        harga_produk: 49000,
+        harga_produk_asli: 99000, 
+      },
+      {
+        nama_produk: "Kelas Online: Belajar Digital Marketing (Full Access)",
+        url_produk: "https://example.com/kelas-digital",
+        url_gambar_produk: "https://placehold.co/400x300/4299e1/ffffff?text=Kelas+Online",
+        harga_produk: 199000,
+        harga_produk_asli: 250000,
+      },
+      {
+        nama_produk: "Template SC Portofolio Modern",
+        url_produk: "https://example.com/sc-portofolio",
+        url_gambar_produk: "https://placehold.co/400x300/ed8936/ffffff?text=Template+SC",
+        harga_produk: 0,
+        harga_produk_asli: 0, 
+      },
+      {
+        nama_produk: "Paket SC Aplikasi Kasir (HP) - Versi Premium",
+        url_produk: "https://example.com/app-kasir",
+        url_gambar_produk: "https://placehold.co/400x300/dc2626/ffffff?text=Aplikasi+Kasir",
+        harga_produk: 350000,
+        harga_produk_asli: 400000,
+      }
+    ];
+
+    // --- State Aplikasi & Sidebar Elements ---
+    let allProducts = [];
+    let currentFilter = 'semua';
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    // --- FUNGSI UTILITY ---
+
+    // Fungsi untuk mengubah harga menjadi format Rupiah
+    function rubah(harga) {
+      if (harga === 0) return "Gratis";
+      let reverse = harga.toString().split('').reverse().join(''),
+        ribuan = reverse.match(/\d{1,3}/g);
+      ribuan = ribuan.join('.').split('').reverse().join('');
+      return "Rp " + ribuan;
+    }
+    
+    // Fungsi untuk menentukan label kategori berdasarkan nama produk dan diskon
+    function getCategoryLabel(product) {
+      const lowerName = product.nama_produk.toLowerCase();
+      
+      // Kelas (baru)
+      if (lowerName.includes('kelas') || lowerName.includes('course') || lowerName.includes('belajar')) return 'kelas'; 
+      
+      // Digital
+      if (lowerName.includes('digital') || lowerName.includes('hp') || lowerName.includes('laptop') || lowerName.includes('aplikasi')) return 'digital';
+
+      // E-book
+      if (lowerName.includes('sc') || lowerName.includes('ebook') || lowerName.includes('panduan')) return 'ebook';
+
+      // Diskon (prioritas terakhir)
+      const hasDiscount = product.harga_produk_asli > product.harga_produk && product.harga_produk_asli > 0;
+      if (hasDiscount) return 'diskon'; 
+      
+      return '';
+    }
+
+    // Helper untuk mengelola class aktif pada tombol kategori (di sidebar dan desktop)
+    function setActiveButton(kategori) {
+        const containers = ['categoryButtonsDesktop', 'categoryButtonsSidebar'];
+        
+        containers.forEach(containerId => {
+            const container = document.getElementById(containerId);
+            if (!container) return; 
+
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(button => {
+                const buttonKategori = button.getAttribute('data-kategori'); 
+                
+                if (buttonKategori === kategori) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        });
+    }
+
+    // --- FUNGSI TAMPILAN ---
+
+    // Fungsi untuk membuat tombol kategori dan menambahkannya ke kontainer
+    function renderCategoryButtons() {
+        const desktopContainer = document.getElementById('categoryButtonsDesktop');
+        const sidebarContainer = document.getElementById('categoryButtonsSidebar');
+        
+        // Kosongkan kontainer sebelum mengisi ulang
+        desktopContainer.innerHTML = '';
+        sidebarContainer.innerHTML = '';
+
+        MAIN_CATEGORIES.forEach(cat => {
+            // Buat tombol untuk Desktop
+            const desktopButton = document.createElement('button');
+            desktopButton.textContent = cat.label;
+            desktopButton.setAttribute('data-kategori', cat.key);
+            desktopButton.onclick = () => filterKategori(cat.key);
+            desktopContainer.appendChild(desktopButton);
+
+            // Buat tombol untuk Sidebar
+            const sidebarButton = document.createElement('button');
+            sidebarButton.textContent = cat.label;
+            sidebarButton.setAttribute('data-kategori', cat.key);
+            sidebarButton.onclick = () => filterKategoriAndClose(cat.key);
+            sidebarContainer.appendChild(sidebarButton);
+        });
+
+        // Set tombol 'Semua' sebagai aktif secara default
+        setActiveButton(currentFilter);
+    }
+    
+    // Fungsi untuk menampilkan produk ke dalam grid
+    function displayProducts(products) {
+      const produkList = document.getElementById("produkList");
+      produkList.innerHTML = '';
+      
+      if (products.length === 0) {
+        produkList.innerHTML = '<p class="col-span-full text-center p-8 text-gray-500">Tidak ada produk yang ditemukan.</p>';
+        return;
+      }
+    
+      products.forEach(product => {
+        const labelKey = getCategoryLabel(product);
+        
+        // Cari label teks dari MAIN_CATEGORIES berdasarkan key, jika ada
+        const categoryConfig = MAIN_CATEGORIES.find(c => c.key === labelKey);
+        const labelText = categoryConfig ? categoryConfig.label.split(' ')[0] : ''; // Ambil kata pertama (e.g., 'Digital')
+
+        const hasDiscount = product.harga_produk_asli > product.harga_produk && product.harga_produk_asli > 0;
+
+        // Tentukan warna label berdasarkan konten 
+        let labelColor = '';
+        if (labelKey === 'diskon') labelColor = 'bg-red-500';
+        else if (labelKey === 'digital') labelColor = 'bg-blue-600';
+        else if (labelKey === 'ebook') labelColor = 'bg-green-600';
+        else if (labelKey === 'kelas') labelColor = 'bg-purple-600';
+
+        const card = document.createElement('div');
+        card.className = 'card flex flex-col';
+        card.innerHTML = `
+          <a href="${product.url_produk}" target="_blank" class="card-link block">
+            <img src="${product.url_gambar_produk}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/cccccc/000000?text=No+Image';" alt="${product.nama_produk}">
+          </a>
+          <div class="card-content p-4 flex flex-col flex-grow">
+            <a href="${product.url_produk}" target="_blank" class="card-link mb-2 block">
+              <h2 class="text-md font-semibold text-gray-800 hover:text-blue-600 transition-colors">${product.nama_produk}</h2>
+            </a>
+            ${labelText ? `<span class="label ${labelColor}">${labelText}</span>` : ''}
+            <div class="price-container mt-auto flex items-center justify-between pt-2">
+                <p class="final-price">${rubah(product.harga_produk)}</p>
+                ${hasDiscount ? `<p class="original-price">${rubah(product.harga_produk_asli)}</p>` : ''}
+            </div>
+          </div>
+        `;
+        produkList.appendChild(card);
+      });
+    }
+    
+    // --- FUNGSI FILTER DAN SIDEBAR ---
+
+    function filterProduk() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      let filtered = allProducts;
+      
+      if (currentFilter !== 'semua') {
+          // Filter berdasarkan key kategori yang didapat dari getCategoryLabel()
+          filtered = filtered.filter(product => {
+              const labelKey = getCategoryLabel(product);
+              return labelKey === currentFilter;
+          });
+      }
+      
+      if (searchTerm) {
+        filtered = filtered.filter(product => product.nama_produk.toLowerCase().includes(searchTerm));
+      }
+      
+      displayProducts(filtered);
+    }
+    
+    function filterKategori(kategori) {
+        currentFilter = kategori;
+        document.getElementById('searchInput').value = ''; 
+        setActiveButton(kategori);
+        filterProduk();
+    }
+    
+    function filterKategoriAndClose(kategori) {
+        filterKategori(kategori);
+        closeSidebar();
+    }
+
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = ''; 
+    }
+
+    // --- FUNGSI MUAT DATA ---
+
+    // Fungsi untuk memuat data dari satu endpoint API
+    function fetchCategoryData(categoryId) {
+        return new Promise((resolve, reject) => {
+            const xmlHttpRequest = new XMLHttpRequest();
+            const url = `${API_URL_BASE}?token=${API_TOKEN}&total_data=100&id_kategori=${categoryId}`;
+            xmlHttpRequest.open("GET", url, true);
+            
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        try {
+                            const response = JSON.parse(this.responseText);
+                            resolve((response && response.data) ? response.data : []);
+                        } catch (e) {
+                            console.error(`Gagal memparsing JSON untuk ID ${categoryId}:`, e);
+                            resolve([]); // Resolve dengan array kosong jika parsing gagal
+                        }
+                    } else {
+                        console.error(`Gagal memuat produk dari API ID ${categoryId}. Status: ${this.status}`);
+                        resolve([]); // Resolve dengan array kosong jika status error
+                    }
+                }
+            };
+            xmlHttpRequest.onerror = function() {
+                console.error(`Koneksi error saat memuat ID ${categoryId}.`);
+                resolve([]);
+            };
+            xmlHttpRequest.send();
+        });
+    }
+
+    // Fungsi utama untuk memuat semua produk
+    function loadProducts() {
+      document.getElementById('loadingIndicator').style.display = 'block';
+
+      // Buat array Promise untuk setiap ID kategori
+      const fetchPromises = CATEGORY_IDS.map(id => fetchCategoryData(id));
+
+      // Tunggu hingga semua permintaan selesai
+      Promise.all(fetchPromises)
+        .then(results => {
+            // Gabungkan semua hasil API menjadi satu array
+            let apiProducts = results.flat(); 
+            
+            // Gabungkan produk manual di depan produk API
+            allProducts = [...manualProducts, ...apiProducts];
+            
+            document.getElementById('loadingIndicator').style.display = 'none';
+            filterProduk();
+        })
+        .catch(error => {
+            console.error("Gagal memuat semua data API:", error);
+            document.getElementById('loadingIndicator').style.display = 'none';
+            // Jika gagal total, tampilkan setidaknya produk manual
+            allProducts = [...manualProducts];
+            filterProduk();
+        });
+    }
+    
+    // --- INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Render kategori filter (desktop dan sidebar)
+      renderCategoryButtons(); 
+      
+      // 2. Muat produk (API + Manual)
+      loadProducts();
+
+      // 3. Attach event listener for menu button
+      const menuToggle = document.getElementById('menuToggle');
+      if (menuToggle) {
+          menuToggle.addEventListener('click', openSidebar);
+      }
+    });
+</script>
+</body>
+</html>
+
