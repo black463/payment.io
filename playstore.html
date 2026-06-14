@@ -32,29 +32,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- File CSS eksternal -->
-    <link rel="stylesheet" href="ps.css">
+    
+    <!-- CSS Internal (Pengganti ps.css) -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+        }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 2rem; border-radius: 1rem;
+            z-index: 50; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .app-icon { width: 72px; height: 72px; flex-shrink: 0; }
+        .rating-bar-container { background-color: #e5e7eb; border-radius: 9999px; height: 10px; flex-grow: 1; overflow: hidden; }
+        .rating-bar { background-color: #22c55e; height: 100%; border-radius: 9999px; }
+        .preview-images-container { overflow-x: auto; padding-bottom: 1rem; scrollbar-width: none; }
+        .preview-images-container::-webkit-scrollbar { display: none; }
+        .preview-image { width: 130px; height: auto; object-fit: cover; flex-shrink: 0; border-radius: 0.75rem; }
+        
+        /* Smooth transition for description */
+        #description-content {
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
 </head>
 <body class="bg-white">
     <!-- Overlay dan Kotak Pesan -->
     <div id="overlay" class="overlay"></div>
-    <div id="messageBox" class="message-box">
-        <p id="messageText" class="text-lg text-gray-800 font-semibold mb-4"></p>
-        <button onclick="closeMessageBox()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">OK</button>
+    <div id="messageBox" class="message-box w-11/12 max-w-sm">
+        <p id="messageText" class="text-lg text-gray-800 font-semibold mb-6"></p>
+        <button onclick="closeMessageBox()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-8 rounded-lg transition duration-300">OK</button>
     </div>
 
-    <div class="container mx-auto p-4 md:p-6 lg:p-8 rounded-lg shadow-xl mt-4 md:mt-8 max-w-2xl">
+    <div class="container mx-auto p-4 md:p-6 lg:p-8 rounded-lg shadow-xl mt-4 md:mt-8 max-w-2xl bg-white">
         <!-- Bagian Header Aplikasi -->
         <div class="flex items-start mb-6">
             <!-- Ikon Aplikasi -->
-            <div class="app-icon rounded-2xl overflow-hidden shadow-lg mr-4">
-                <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/17563054855155839052678499072071.png" alt="Ikon Aplikasi 777singa" class="w-full h-full object-cover">
+            <div class="app-icon rounded-2xl overflow-hidden shadow-md mr-4">
+                <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/17563054855155839052678499072071.png" alt="Ikon Aplikasi Nr Payment" class="w-full h-full object-cover">
             </div>
             <!-- Informasi Aplikasi -->
             <div class="flex-grow">
                 <h1 class="text-2xl font-bold text-gray-800">Nr Payment</h1>
-                <p class="text-gray-600">Pt.Aceh Multi Payment</p>
-                <p class="text-sm text-gray-500">Pembelian dalam aplikasi</p>
+                <p class="text-green-700 font-medium">Nr developer</p>
+                <p class="text-sm text-gray-500 mt-1">Pembelian dalam aplikasi</p>
             </div>
         </div>
 
@@ -62,274 +90,396 @@
         <div class="flex items-center justify-between text-center mb-6 border-b pb-6">
             <!-- Ulasan -->
             <div class="stats-item flex flex-col items-center">
-                <div class="flex items-center text-sm font-semibold text-gray-800">
+                <div class="flex items-center text-sm font-semibold text-gray-800 h-8">
                     <span class="mr-1">4.9</span>
-                    <i class="fas fa-star text-yellow-400"></i>
+                    <i class="fas fa-star text-black text-xs"></i>
                 </div>
                 <p class="text-xs text-gray-500 mt-1">827.8K ulasan</p>
             </div>
             <!-- Garis pemisah -->
-            <div class="h-10 w-px bg-gray-300 mx-4"></div>
-            <!-- Download -->
+            <div class="h-8 w-px bg-gray-200 mx-2"></div>
+            <!-- Ukuran File (Menggantikan 18+) -->
             <div class="stats-item flex flex-col items-center">
-                <div class="text-sm font-semibold text-gray-800">100M+</div>
-                <p class="text-xs text-gray-500 mt-1">Download</p>
+                <div class="text-sm font-semibold text-gray-800 flex items-center justify-center h-8">
+                    25 MB
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Ukuran</p>
             </div>
             <!-- Garis pemisah -->
-            <div class="h-10 w-px bg-gray-300 mx-4"></div>
-            <!-- Rating -->
+            <div class="h-8 w-px bg-gray-200 mx-2"></div>
+            <!-- Download -->
             <div class="stats-item flex flex-col items-center">
-                <div class="flex items-center">
-                    <img src="https://placehold.co/32x32/E0F2FE/000000?text=18%2B" alt="Dinilai untuk 18+" class="w-8 h-8 rounded-full shadow">
-                </div>
-                <p class="text-xs text-gray-500 mt-1">Dinilai untuk 18+</p>
+                <div class="text-sm font-semibold text-gray-800 flex items-center justify-center h-8">100M+</div>
+                <p class="text-xs text-gray-500 mt-1">Download</p>
             </div>
         </div>
 
         <!-- Tombol Download dan Aksi Lainnya -->
         <div class="flex flex-col space-y-4 mb-6">
-            <a href="https://download.bukaolshop.com/files/apk/payment03.apk" download class="bg-green-600 text-white font-semibold py-3 px-6 rounded-full text-lg shadow-md hover:bg-green-700 transition duration-300 text-center">
+            <!-- Tombol dirubah menjadi rounded-xl (petak tumpul) -->
+            <a href="https://download.bukaolshop.com/files/apk/payment03.apk" download class="bg-green-600 text-white font-medium py-2.5 px-6 rounded-xl text-md shadow-sm hover:bg-green-700 transition duration-300 text-center w-full">
                 Install
             </a>
-            <div class="flex items-center justify-center space-x-6 text-green-600">
-                <div class="flex items-center space-x-2 cursor-pointer hover:text-green-700 transition duration-300">
+            <div class="flex items-center justify-center space-x-6 text-green-700 mt-2">
+                <div class="flex items-center space-x-2 cursor-pointer hover:text-green-800 transition duration-300" onclick="showMessage('Tautan berhasil disalin!')">
                     <i class="fas fa-share-alt"></i>
                     <span class="font-medium text-sm">Bagikan</span>
                 </div>
-                <div class="flex items-center space-x-2 cursor-pointer hover:text-green-700 transition duration-300">
-                    <i class="fas fa-bookmark"></i>
+                <div class="flex items-center space-x-2 cursor-pointer hover:text-green-800 transition duration-300" onclick="showMessage('Ditambahkan ke daftar keinginan.')">
+                    <i class="far fa-bookmark"></i>
                     <span class="font-medium text-sm">Tambahkan ke daftar</span>
                 </div>
             </div>
         </div>
         
         <!-- Bagian Gambar Pratinjau -->
-        <div class="preview-images-container flex space-x-4 mb-6">
-            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2221474752481456978389005.jpg" alt="Pratinjau aplikasi 1" class="rounded-lg shadow-lg preview-image">
-            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2228345033868610583080750.jpg" alt="Pratinjau aplikasi 2" class="rounded-lg shadow-lg preview-image">
-            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2249584984592218635370577.jpg" alt="Pratinjau aplikasi 3" class="rounded-lg shadow-lg preview-image">
-            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/20250827_2255116572861400272889690.jpg" alt="Pratinjau aplikasi 2" class="rounded-lg shadow-lg preview-image">
-            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/20250827_2229031404254305895786434.jpg" alt="Pratinjau aplikasi 3" class="rounded-lg shadow-lg preview-image">
-          
+        <div class="preview-images-container flex space-x-3 mb-6">
+            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2221474752481456978389005.jpg" alt="Pratinjau aplikasi 1" class="preview-image border border-gray-100">
+            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2228345033868610583080750.jpg" alt="Pratinjau aplikasi 2" class="preview-image border border-gray-100">
+            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/09/20250925_2249584984592218635370577.jpg" alt="Pratinjau aplikasi 3" class="preview-image border border-gray-100">
+            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/20250827_2255116572861400272889690.jpg" alt="Pratinjau aplikasi 4" class="preview-image border border-gray-100">
+            <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2025/08/20250827_2229031404254305895786434.jpg" alt="Pratinjau aplikasi 5" class="preview-image border border-gray-100">
         </div>
 
         <!-- Bagian Tentang Game -->
         <div class="mb-6">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Tentang Aplikasi ini</h2>
-                <button id="toggle-description" class="text-green-600 hover:text-green-700 transition duration-300">
-                    <i class="fas fa-chevron-right text-sm"></i>
+            <div class="flex items-center justify-between mb-4 cursor-pointer" onclick="toggleDescription()">
+                <h2 class="text-lg font-bold text-gray-800">Tentang Aplikasi ini</h2>
+                <button id="toggle-description-btn" class="text-gray-600 hover:text-green-700 transition duration-300">
+                    <i class="fas fa-arrow-right text-sm"></i>
                 </button>
             </div>
-            <div id="description-content" class="text-gray-700 leading-relaxed overflow-hidden" style="max-height: 80px; transition: max-height 0.5s ease-out;">
-                <p>
+            <div id="description-content" class="text-sm text-gray-600 leading-relaxed overflow-hidden" style="max-height: 60px;">
+                <p class="mb-3">
                     Aplikasi PPOB terbaik untuk semua kebutuhan pembayaran Anda, dirancang khusus bagi pengguna Indonesia!
                     Nikmati kemudahan transaksi mulai dari token PLN, paket data, pulsa, top-up e-wallet, pembayaran tagihan, hingga layanan digital lainnya dengan harga termurah di kelasnya.
                 </p>
                 <p>
                     Setiap transaksi berkesempatan mendapatkan cashback menarik yang bisa langsung digunakan untuk pembelian berikutnya.
                     Kami berkomitmen memberikan layanan cepat, aman, dan terpercaya, sehingga Anda dapat bertransaksi kapan saja, di mana saja, tanpa ribet.
-
                     Bergabunglah sekarang dan rasakan pengalaman PPOB hemat, mudah, dan penuh keuntungan!
                 </p>
-            </div>
-            <div id="read-more-button" class="text-right mt-2 hidden">
-                <button onclick="toggleDescription()" class="text-green-600 font-medium">Baca lebih sedikit</button>
             </div>
         </div>
 
         <!-- Bagian Keamanan Data -->
         <div class="mb-6 border-t pt-6">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Keamanan data</h2>
-                <a href="#" class="text-green-600 hover:text-green-700 transition duration-300">
-                    <i class="fas fa-chevron-right text-sm"></i>
+                <h2 class="text-lg font-bold text-gray-800">Keamanan data</h2>
+                <a href="#" class="text-gray-600 hover:text-green-700 transition duration-300">
+                    <i class="fas fa-arrow-right text-sm"></i>
                 </a>
             </div>
-            <p class="text-gray-700 mb-4">
+            <p class="text-sm text-gray-600 mb-4">
                 Keamanan dimulai dengan memahami cara developer mengumpulkan dan membagikan data Anda. Praktik privasi dan keamanan data dapat bervariasi berdasarkan penggunaan, wilayah, dan usia Anda. Developer memberikan informasi ini dan dapat memperbaruinya dari waktu ke waktu.
             </p>
-            <div class="bg-gray-50 p-4 rounded-lg shadow-inner space-y-4">
+            <div class="bg-white border border-gray-200 p-4 rounded-xl space-y-4">
                 <div class="flex items-start">
-                    <i class="fas fa-share-alt text-gray-600 mt-1 mr-3"></i>
+                    <i class="fas fa-share-alt text-gray-500 mt-1 mr-4"></i>
                     <div>
-                        <p class="text-gray-800 font-medium">Tidak ada data yang dibagikan dengan pihak ketiga</p>
-                        <p class="text-sm text-gray-500">Pelajari lebih lanjut tentang cara developer menyatakan berbagi data</p>
+                        <p class="text-sm text-gray-800">Tidak ada data yang dibagikan dengan pihak ketiga</p>
+                        <p class="text-xs text-gray-500 mt-1">Pelajari lebih lanjut tentang cara developer menyatakan berbagi data</p>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <i class="fas fa-share-alt text-gray-600 mt-1 mr-3"></i>
+                    <i class="fas fa-cloud-download-alt text-gray-500 mt-1 mr-4"></i>
                     <div>
-                        <p class="text-gray-800 font-medium">Aplikasi ini dapat mengumpulkan jenis data ini</p>
-                        <p class="text-sm text-gray-500">Lokasi, Info pribadi, dan 4 lainnya</p>
+                        <p class="text-sm text-gray-800">Aplikasi ini dapat mengumpulkan jenis data ini</p>
+                        <p class="text-xs text-gray-500 mt-1">Lokasi, Info pribadi, dan 4 lainnya</p>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <i class="fas fa-lock text-gray-600 mt-1 mr-3"></i>
+                    <i class="fas fa-lock text-gray-500 mt-1 mr-4"></i>
                     <div>
-                        <p class="text-gray-800 font-medium">Data dienkripsi dalam perjalanan</p>
+                        <p class="text-sm text-gray-800">Data dienkripsi dalam perjalanan</p>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <i class="fas fa-trash-alt text-gray-600 mt-1 mr-3"></i>
+                    <i class="fas fa-trash-alt text-gray-500 mt-1 mr-4"></i>
                     <div>
-                        <p class="text-gray-800 font-medium">Anda dapat meminta agar data dihapus</p>
+                        <p class="text-sm text-gray-800">Anda dapat meminta agar data dihapus</p>
                     </div>
                 </div>
-                <a href="#" class="text-green-600 font-medium block mt-4">Lihat detail</a>
+                <a href="#" class="text-green-700 font-medium text-sm block mt-2">Lihat detail</a>
             </div>
         </div>
 
         <!-- Bagian Rating dan Ulasan -->
         <div class="mb-6 border-t pt-6">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Rating dan ulasan</h2>
-                <a href="#" class="text-green-600 hover:text-green-700 transition duration-300">
-                    <i class="fas fa-chevron-right text-sm"></i>
+                <h2 class="text-lg font-bold text-gray-800">Rating dan ulasan</h2>
+                <a href="#" class="text-gray-600 hover:text-green-700 transition duration-300">
+                    <i class="fas fa-arrow-right text-sm"></i>
                 </a>
             </div>
+            
             <!-- Bagian ringkasan rating -->
             <div class="flex items-center mb-6">
-                <div class="w-1/3 flex flex-col items-center">
+                <div class="w-1/3 flex flex-col items-start pr-4">
                     <p class="text-5xl font-bold text-gray-800">4.9</p>
-                    <div class="flex text-yellow-400 mt-1">
+                    <div class="flex text-green-700 mt-1 text-xs space-x-0.5">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="text-sm text-gray-500 mt-1">827.8K ulasan</p>
+                    <p class="text-xs text-gray-500 mt-1">827.8K ulasan</p>
                 </div>
-                <div class="w-2/3 ml-4 space-y-1">
+                <div class="w-2/3 space-y-1.5">
                     <div class="flex items-center">
-                        <span class="w-4 text-xs text-gray-500">5</span>
-                        <div class="rating-bar-container mx-2">
+                        <span class="w-2 text-xs text-gray-600 font-medium text-right mr-2">5</span>
+                        <div class="rating-bar-container">
                             <div class="rating-bar" style="width: 95%;"></div>
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <span class="w-4 text-xs text-gray-500">4</span>
-                        <div class="rating-bar-container mx-2">
+                        <span class="w-2 text-xs text-gray-600 font-medium text-right mr-2">4</span>
+                        <div class="rating-bar-container">
                             <div class="rating-bar" style="width: 3%;"></div>
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <span class="w-4 text-xs text-gray-500">3</span>
-                        <div class="rating-bar-container mx-2">
+                        <span class="w-2 text-xs text-gray-600 font-medium text-right mr-2">3</span>
+                        <div class="rating-bar-container">
                             <div class="rating-bar" style="width: 1%;"></div>
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <span class="w-4 text-xs text-gray-500">2</span>
-                        <div class="rating-bar-container mx-2">
+                        <span class="w-2 text-xs text-gray-600 font-medium text-right mr-2">2</span>
+                        <div class="rating-bar-container">
                             <div class="rating-bar" style="width: 0.5%;"></div>
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <span class="w-4 text-xs text-gray-500">1</span>
-                        <div class="rating-bar-container mx-2">
+                        <span class="w-2 text-xs text-gray-600 font-medium text-right mr-2">1</span>
+                        <div class="rating-bar-container">
                             <div class="rating-bar" style="width: 0.5%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Contoh ulasan pengguna -->
-            <div class="border-t pt-6">
-                <div class="flex items-center mb-3">
-                    <img src="https://placehold.co/40x40/E0F2FE/000000?text=AV" alt="Foto profil Adri Viljoen" class="w-10 h-10 rounded-full mr-3">
-                    <span class="font-medium text-gray-800">Adri Viljoen</span>
-                    <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer"></i>
-                </div>
-                <div class="flex items-center mb-2 text-sm text-gray-500">
-                    <div class="flex text-yellow-400 mr-2">
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
+            <!-- Daftar Ulasan -->
+            <div id="reviews-container">
+                <!-- Ulasan 1 (Selalu Tampil) -->
+                <div class="mt-4">
+                    <div class="flex items-center mb-3">
+                        <img src="https://placehold.co/40x40/16a34a/ffffff?text=A" alt="Foto profil Adri Viljoen" class="w-8 h-8 rounded-full mr-3">
+                        <span class="font-medium text-gray-800 text-sm">Adri Viljoen</span>
+                        <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
                     </div>
-                    <p>12 Desember, 2024</p>
+                    <div class="flex items-center mb-2 text-xs text-gray-500">
+                        <div class="flex text-green-700 mr-2 space-x-0.5">
+                            <i class="fas fa-star text-[10px]"></i>
+                            <i class="fas fa-star text-[10px]"></i>
+                            <i class="fas fa-star text-[10px]"></i>
+                            <i class="fas fa-star text-[10px]"></i>
+                            <i class="fas fa-star text-[10px]"></i>
+                        </div>
+                        <p>12 Desember 2024</p>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">
+                        Dulu Jualan suka rugi, Semenjak Pakai Nr Payment Cuan banget Dan ada Cashback 
+                    </p>
+                    <div class="text-xs text-gray-500 mb-4">
+                        1.8K orang menganggap ulasan ini membantu
+                    </div>
+                    <div class="flex items-center space-x-4 mb-2">
+                        <span class="text-xs text-gray-500">Apakah ulasan ini membantu?</span>
+                        <button class="bg-white border border-gray-300 text-gray-600 font-medium py-1 px-3 rounded-full text-xs hover:bg-gray-50 transition duration-300">Ya</button>
+                        <button class="bg-white border border-gray-300 text-gray-600 font-medium py-1 px-3 rounded-full text-xs hover:bg-gray-50 transition duration-300">Tidak</button>
+                    </div>
                 </div>
-                <p class="text-gray-700 mb-4">
-                    Dulu Jualan suka rugi, Semenjak Pakai Nr Payment Cuan banget Dan ada Cashback 
-                </p>
-                <div class="text-sm text-gray-500 mb-4">
-                    1.8K orang menganggap ulasan ini membantu
-                </div>
-                <div class="flex items-center space-x-4 mb-6">
-                    <span class="text-sm text-gray-500">Apakah ulasan ini membantu Anda?</span>
-                    <button class="bg-gray-100 text-gray-800 font-medium py-1 px-4 rounded-full text-sm hover:bg-gray-200 transition duration-300">Ya</button>
-                    <button class="bg-gray-100 text-gray-800 font-medium py-1 px-4 rounded-full text-sm hover:bg-gray-200 transition duration-300">Tidak</button>
+
+                <!-- Ulasan Tambahan (Disembunyikan awalnya) -->
+                <div id="hidden-reviews" class="hidden">
+                    <!-- Ulasan 2 -->
+                    <div class="mt-4 border-t border-gray-100 pt-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://placehold.co/40x40/3b82f6/ffffff?text=B" alt="Foto profil Budi Santoso" class="w-8 h-8 rounded-full mr-3">
+                            <span class="font-medium text-gray-800 text-sm">Budi Santoso</span>
+                            <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
+                        </div>
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <div class="flex text-green-700 mr-2 space-x-0.5">
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                            </div>
+                            <p>10 Januari 2025</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Aplikasi lancar banget buat isi token listrik pelanggan. Harga modalnya murah jadi bisa untung lumayan buat konter kecil-kecilan. CS nya juga fast respon kalau ada kendala nyangkut.
+                        </p>
+                    </div>
+
+                    <!-- Ulasan 3 -->
+                    <div class="mt-4 border-t border-gray-100 pt-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://placehold.co/40x40/f59e0b/ffffff?text=S" alt="Foto profil Siti Aminah" class="w-8 h-8 rounded-full mr-3">
+                            <span class="font-medium text-gray-800 text-sm">Siti Aminah</span>
+                            <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
+                        </div>
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <div class="flex text-green-700 mr-2 space-x-0.5">
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                            </div>
+                            <p>28 Februari 2025</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Top up e-wallet super cepat hitungan detik langsung masuk. Sangat recommended buat yang buka agen pembayaran di rumah. Fitur cetak struk bluetoothnya juga mudah disambungkan.
+                        </p>
+                    </div>
+
+                    <!-- Ulasan 4 -->
+                    <div class="mt-4 border-t border-gray-100 pt-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://placehold.co/40x40/ef4444/ffffff?text=R" alt="Foto profil Reza Pratama" class="w-8 h-8 rounded-full mr-3">
+                            <span class="font-medium text-gray-800 text-sm">Reza Pratama</span>
+                            <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
+                        </div>
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <div class="flex text-green-700 mr-2 space-x-0.5">
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                            </div>
+                            <p>15 Maret 2025</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Suka banget sama fiturnya yang lengkap. Mulai dari bayar BPJS, PDAM, asuransi, sampai top up game kesukaan anak muda ada semua. Sukses terus Nr Payment!
+                        </p>
+                    </div>
+
+                    <!-- Ulasan 5 -->
+                    <div class="mt-4 border-t border-gray-100 pt-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=D" alt="Foto profil Dewi Lestari" class="w-8 h-8 rounded-full mr-3">
+                            <span class="font-medium text-gray-800 text-sm">Dewi Lestari</span>
+                            <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
+                        </div>
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <div class="flex text-green-700 mr-2 space-x-0.5">
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star-half-alt text-[10px]"></i>
+                            </div>
+                            <p>05 April 2025</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Awalnya ragu mau coba karena pernah ketipu apk PPOB bodong, tapi setelah sebulan pakai ternyata sangat amanah dan ngebantu usaha warung saya. Transaksi stabil walau lagi jam sibuk awal bulan.
+                        </p>
+                    </div>
+
+                    <!-- Ulasan 6 -->
+                    <div class="mt-4 border-t border-gray-100 pt-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://placehold.co/40x40/06b6d4/ffffff?text=A" alt="Foto profil Ahmad Fauzi" class="w-8 h-8 rounded-full mr-3">
+                            <span class="font-medium text-gray-800 text-sm">Ahmad Fauzi</span>
+                            <i class="fas fa-ellipsis-v text-gray-400 ml-auto cursor-pointer p-2"></i>
+                        </div>
+                        <div class="flex items-center mb-2 text-xs text-gray-500">
+                            <div class="flex text-green-700 mr-2 space-x-0.5">
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                                <i class="fas fa-star text-[10px]"></i>
+                            </div>
+                            <p>20 Mei 2025</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Tampilan aplikasinya sangat sederhana, UI nya gampang dipahami buat bapak-bapak kayak saya yang kurang ngerti teknologi. Deposit juga gampang banyak pilihan banknya. Top markotop!
+                        </p>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="text-green-600 font-medium block mt-4">Lihat semua ulasan</a>
+
+            <button id="toggle-reviews-btn" onclick="toggleReviews()" class="text-green-700 font-medium text-sm block mt-4 w-full text-left focus:outline-none hover:text-green-800 transition duration-300">Lihat semua ulasan</button>
         </div>
 
         <!-- Bagian Apa yang baru -->
         <div class="mb-6 border-t pt-6">
-            <h2 class="text-xl font-bold text-gray-800">Apa yang baru</h2>
-            <p class="text-gray-700 leading-relaxed">
+            <h2 class="text-lg font-bold text-gray-800 mb-2">Apa yang baru</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
                 Penambahan 3 permainan
             </p>
-        </div>
-
-        <!-- Bagian Game serupa -->
-        <div class="mb-6 border-t pt-6">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Game serupa</h2>
-                <a href="#" class="text-green-600 hover:text-green-700 transition duration-300">
-                    <i class="fas fa-chevron-right text-sm"></i>
-                </a>
-            </div>
-            <!-- Anda bisa menambahkan daftar game serupa di sini -->
-        </div>
-
-        <!-- Bagian Kids & family -->
-        <div class="mb-6 border-t pt-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Kids & family</h2>
-            <ul class="space-y-2">
-                <li>
-                    <a href="#" class="text-gray-700 hover:text-green-600 transition duration-300">Panduan Orang Tua</a>
-                </li>
-                <li>
-                    <a href="#" class="text-gray-700 hover:text-green-600 transition duration-300">Berbagi keluarga</a>
-                </li>
-            </ul>
         </div>
         
         <!-- Bagian Tautan dan bahasa -->
         <div class="mb-6 border-t pt-6">
             <div class="flex flex-wrap text-gray-500 text-sm mb-4 space-x-4">
-                <a href="#" class="hover:text-green-600 transition duration-300">Ketentuan Layanan</a>
-                <a href="#" class="hover:text-green-600 transition duration-300">Privasi</a>
-                <a href="#" class="hover:text-green-600 transition duration-300">Developer</a>
+                <a href="#" class="hover:text-green-700 transition duration-300">Ketentuan Layanan</a>
+                <a href="#" class="hover:text-green-700 transition duration-300">Privasi</a>
+                <a href="#" class="hover:text-green-700 transition duration-300">Developer</a>
             </div>
             <div class="flex items-center text-gray-500 text-sm mb-4">
-                <span class="mr-1">Toko</span>
+                <span class="mr-1">Toko:</span>
                 <span>Semua harga sudah termasuk PPN.</span>
-            </div>
-            <div class="flex items-center space-x-2 text-gray-700 cursor-pointer">
-                <!-- Ikon bendera Inggris -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21 3H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM9 20.82V3.18a3 3 0 0 0 6 0V20.82a3 3 0 0 0-6 0zM21 11h-4a2 2 0 0 0-2 2v2H9v-2a2 2 0 0 0-2-2H3v-2h4a2 2 0 0 0 2-2V7h6v2a2 2 0 0 0 2 2h4v2z"/>
-                </svg>
-                <span>English (English)</span>
             </div>
         </div>
 
         <!-- Bagian Tandai sebagai tidak pantas -->
-        <div class="text-gray-500 text-sm border-t pt-6">
-            <div class="flex items-center space-x-2 cursor-pointer">
-                <i class="fas fa-flag"></i>
+        <div class="text-gray-500 text-sm border-t pt-6 pb-4">
+            <div class="flex items-center space-x-3 cursor-pointer hover:text-gray-700">
+                <i class="far fa-flag"></i>
                 <span>Tandai sebagai tidak pantas</span>
             </div>
         </div>
     </div>
 
-    <script src="ps.js"></script>
+    <!-- JS Internal (Pengganti ps.js) -->
+    <script>
+        // Logika untuk menampilkan dan menyembunyikan deskripsi panjang
+        function toggleDescription() {
+            const content = document.getElementById('description-content');
+            const toggleBtn = document.getElementById('toggle-description-btn');
+            
+            if (content.style.maxHeight !== 'none' && content.style.maxHeight !== '500px') {
+                content.style.maxHeight = '500px'; // Angka cukup besar untuk menampung seluruh teks
+                toggleBtn.innerHTML = '<i class="fas fa-arrow-up text-sm"></i>';
+            } else {
+                content.style.maxHeight = '60px';
+                toggleBtn.innerHTML = '<i class="fas fa-arrow-right text-sm"></i>';
+            }
+        }
+
+        // Logika untuk Custom Message Box
+        function showMessage(text) {
+            document.getElementById('messageText').innerText = text;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('messageBox').style.display = 'block';
+        }
+
+        function closeMessageBox() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('messageBox').style.display = 'none';
+        }
+
+        // Logika untuk menampilkan/menyembunyikan semua ulasan
+        function toggleReviews() {
+            const hiddenReviews = document.getElementById('hidden-reviews');
+            const toggleBtn = document.getElementById('toggle-reviews-btn');
+            
+            if (hiddenReviews.classList.contains('hidden')) {
+                hiddenReviews.classList.remove('hidden');
+                toggleBtn.innerText = 'Sembunyikan ulasan';
+            } else {
+                hiddenReviews.classList.add('hidden');
+                toggleBtn.innerText = 'Lihat semua ulasan';
+            }
+        }
+    </script>
 </body>
 </html>
-
-    
