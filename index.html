@@ -10,6 +10,7 @@
         
         * {
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
         
         .gradient-bg {
@@ -141,6 +142,44 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
         }
+
+        /* Custom Scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Chart Animation */
+        .bar-grow {
+            animation: barGrow 1.5s ease-out forwards;
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        
+        @keyframes barGrow {
+            to { transform: scaleY(1); }
+        }
+
+        /* Jarum/Wick animation */
+        .wick-grow {
+            animation: wickGrow 1.5s ease-out forwards;
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        
+        @keyframes wickGrow {
+            to { transform: scaleY(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 overflow-x-hidden">
@@ -148,17 +187,21 @@
     <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                <!-- LOGO UPDATE -->
                 <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">NR</span>
-                    </div>
+                    <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2026/06/file_000000009f2071f5b88a12b7b086e5b03986179164258528929.png" alt="NR Payment Logo" class="w-10 h-10 object-contain rounded-lg">
                     <span class="text-xl font-bold text-gray-800">NR Payment</span>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors">Fitur</a>
-                    <a href="#services" class="text-gray-600 hover:text-blue-600 transition-colors">Layanan</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors">Kontak</a>
-                    <a href="https://black463.github.io/payment.io/playstore.html" class="gradient-bg text-white px-6 py-2 rounded-lg hover:opacity-90 transition-all duration-300 hover:scale-105">
+                
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Fitur</a>
+                    <a href="#services" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Layanan</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Harga Produk</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Kontak</a>
+                    <a href="#dashboard" class="text-blue-600 border border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-all duration-300 font-medium">
+                        Akses Dasbor
+                    </a>
+                    <a href="https://black463.github.io/payment.io/playstore.html" class="gradient-bg text-white px-6 py-2 rounded-lg hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-md shadow-blue-500/30">
                         Daftar Sekarang
                     </a>
                 </div>
@@ -174,12 +217,15 @@
             </div>
             
             <!-- Mobile menu -->
-            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0">
                 <div class="px-4 py-4 space-y-4">
                     <a href="#features" class="block text-gray-600 hover:text-blue-600 transition-colors">Fitur</a>
                     <a href="#services" class="block text-gray-600 hover:text-blue-600 transition-colors">Layanan</a>
+                    <a href="#pricing" class="block text-gray-600 hover:text-blue-600 transition-colors">Harga Produk</a>
                     <a href="#contact" class="block text-gray-600 hover:text-blue-600 transition-colors">Kontak</a>
-                    <a href="https://black463.github.io/payment.io/playstore.html" class="w-full gradient-bg text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-300 text-center block">
+                    <hr class="border-gray-100">
+                    <a href="#dashboard" class="block text-blue-600 font-medium hover:text-blue-800 transition-colors text-center border border-blue-200 py-2 rounded-lg">Akses Dasbor</a>
+                    <a href="https://black463.github.io/payment.io/playstore.html" class="w-full gradient-bg text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-300 text-center block shadow-md shadow-blue-500/30">
                         Daftar Sekarang
                     </a>
                 </div>
@@ -188,104 +234,426 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-20 pb-16 gradient-bg relative overflow-hidden">
+    <section class="pt-24 pb-20 gradient-bg relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <!-- Animated Background Elements -->
         <div class="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full rotate-slow"></div>
         <div class="absolute top-40 right-20 w-16 h-16 bg-white/5 rounded-full wave-animation"></div>
-        <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white/10 rounded-full floating" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-10 left-1/4 w-12 h-12 bg-white/10 rounded-full floating" style="animation-delay: 1s;"></div>
         <div class="absolute top-1/3 right-1/3 w-8 h-8 bg-white/5 rounded-full bounce-in" style="animation-delay: 2s;"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+            <div class="grid lg:grid-cols-2 gap-12 items-center min-h-[75vh]">
                 <div class="text-white slide-in">
-                    <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
                         Revolusi <span class="text-yellow-300">PPOB</span><br>
                         di Genggaman Anda
                     </h1>
-                    <p class="text-lg sm:text-xl mb-8 text-white/90 leading-relaxed">
+                    <p class="text-lg sm:text-xl mb-8 text-white/90 leading-relaxed font-light">
                         NR Payment menghadirkan solusi pembayaran online terlengkap dengan teknologi terdepan. 
-                        Bayar tagihan, isi pulsa, dan berbagai transaksi lainnya dengan mudah dan aman.
+                        Bayar tagihan, isi pulsa, dan pantau cuan dengan mudah dan aman.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://black463.github.io/payment.io/playstore.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 pulse-glow text-center">
+                        <a href="https://black463.github.io/payment.io/playstore.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-all duration-300 pulse-glow text-center shadow-lg">
                             Mulai Sekarang
                         </a>
-                        <button class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 wave-animation">
-                            Pelajari Lebih Lanjut
-                        </button>
+                        <a href="#dashboard" class="border-2 border-white/50 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 text-center backdrop-blur-sm">
+                            Lihat Dasbor
+                        </a>
                     </div>
                 </div>
                 
+                <!-- Simulasi Keuntungan Card -->
                 <div class="relative floating mt-12 lg:mt-0">
-                    <div class="card-3d bg-white rounded-3xl p-6 sm:p-8 max-w-md mx-auto">
+                    <div class="card-3d bg-white/95 backdrop-blur-lg rounded-3xl p-6 sm:p-8 max-w-md mx-auto border border-blue-200 shadow-2xl">
                         <div class="text-center mb-8">
-                            <div class="w-20 h-20 gradient-bg rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg">
-                                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            <div class="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-inner">
+                                <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Dashboard Mitra</h3>
-                            <p class="text-gray-600 text-lg">Platform PPOB Profesional</p>
+                            <h3 class="text-2xl font-bold text-blue-900 mb-1">Simulasi Cuan</h3>
+                            <p class="text-blue-600/80 text-sm font-medium">Platform PPOB Paling Menguntungkan</p>
                         </div>
                         
                         <div class="space-y-4 mb-6">
-                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+                            <div class="flex items-center justify-between p-4 bg-blue-50/80 rounded-xl border border-blue-100/50">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-md">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-800 font-semibold">Total Mitra</span>
-                                        <p class="text-blue-600 font-bold text-lg">15,847</p>
-                                    </div>
+                                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-600 font-bold shadow-sm">1</div>
+                                    <span class="text-blue-900 font-medium">Target Transaksi</span>
                                 </div>
-                                <div class="text-green-500 font-bold text-sm bg-green-100 px-3 py-1 rounded-full">+12%</div>
+                                <span class="font-bold text-blue-700">100+ /hari</span>
                             </div>
-                            
-                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border border-green-200">
+                            <div class="flex items-center justify-between p-4 bg-blue-50/80 rounded-xl border border-blue-100/50">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center shadow-md">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-800 font-semibold">Transaksi Hari Ini</span>
-                                        <p class="text-green-600 font-bold text-lg">Rp 2.4M</p>
-                                    </div>
+                                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-600 font-bold shadow-sm">2</div>
+                                    <span class="text-blue-900 font-medium">Margin Rata-rata</span>
                                 </div>
-                                <div class="text-green-500 font-bold text-sm bg-green-100 px-3 py-1 rounded-full">+8%</div>
+                                <span class="font-bold text-blue-700">Rp 2.500</span>
                             </div>
-                            
-                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center shadow-md">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-800 font-semibold">Success Rate</span>
-                                        <p class="text-purple-600 font-bold text-lg">99.8%</p>
-                                    </div>
+                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl shadow-md">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-white font-bold">Estimasi Laba Bulanan</span>
                                 </div>
-                                <div class="text-green-500 font-bold text-sm bg-green-100 px-3 py-1 rounded-full">Optimal</div>
+                                <span class="font-extrabold text-yellow-300 text-xl">Rp 7.500.000</span>
                             </div>
                         </div>
                         
-                        <button class="w-full gradient-bg text-white py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
-                            Akses Dashboard Lengkap
-                        </button>
+                        <a href="#pricing" class="w-full block text-center bg-blue-50 text-blue-700 py-4 rounded-xl font-bold border border-blue-200 hover:bg-blue-100 transition-all duration-300">
+                            Cek Harga Modal
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="py-20 bg-gray-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Dasbor Pantauan Live</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Data real-time performa ekosistem NR Payment hari ini
+                </p>
+            </div>
+            
+            <!-- Dashboard Stats Grid -->
+            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8">
+                <!-- Stat 1: Jumlah Transaksi -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-1 transition-transform duration-300 bounce-in" style="animation-delay: 0.1s;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-gray-500 font-medium text-xs mb-1 tracking-wide">TOTAL TRANSAKSI</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800">1,245,892</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-green-600 font-bold flex items-center bg-green-50 px-2 py-1 rounded-md text-xs">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                            12.5%
+                        </span>
+                        <span class="text-gray-400 ml-2 text-xs">dari bulan lalu</span>
+                    </div>
+                </div>
+
+                <!-- Stat 2: Jumlah User -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-1 transition-transform duration-300 bounce-in" style="animation-delay: 0.3s;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-gray-500 font-medium text-xs mb-1 tracking-wide">JUMLAH USER AKTIF</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800">45,830</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-green-600 font-bold flex items-center bg-green-50 px-2 py-1 rounded-md text-xs">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                            8.2%
+                        </span>
+                        <span class="text-gray-400 ml-2 text-xs">mitra baru minggu ini</span>
+                    </div>
+                </div>
+
+                <!-- Stat 3: Jumlah Income User -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:-translate-y-1 transition-transform duration-300 bounce-in" style="animation-delay: 0.5s;">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-gray-500 font-medium text-xs mb-1 tracking-wide">TOTAL INCOME USER</p>
+                            <h3 class="text-3xl font-extrabold text-blue-600">Rp 12.5M+</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-green-600 font-bold flex items-center bg-green-50 px-2 py-1 rounded-md text-xs">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                            24.3%
+                        </span>
+                        <span class="text-gray-400 ml-2 text-xs">profit bulan ini</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lower Dashboard: Transaction & Data Analysis -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 slide-in" style="animation-delay: 0.7s;">
+                
+                <!-- Recent Transaction Box -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-gray-800 text-lg">Transaksi Masuk (Live)</h3>
+                        <span class="flex h-3 w-3 relative">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                        </span>
+                    </div>
+                    <div class="space-y-4 flex-grow">
+                        <div class="flex items-center justify-between p-3 hover:bg-blue-50 rounded-lg transition-colors border-l-4 border-blue-500 bg-gray-50/50">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-lg">📱</div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Pulsa Telkomsel 50.000</p>
+                                    <p class="text-xs text-gray-500">User: 0812****8992 • 1 detik lalu</p>
+                                </div>
+                            </div>
+                            <span class="text-green-600 font-bold text-xs bg-green-100 px-3 py-1 rounded-full">Sukses</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 hover:bg-blue-50 rounded-lg transition-colors border-l-4 border-yellow-500 bg-gray-50/50">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-lg">⚡</div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Token PLN 100.000</p>
+                                    <p class="text-xs text-gray-500">User: 0857****1123 • 5 detik lalu</p>
+                                </div>
+                            </div>
+                            <span class="text-green-600 font-bold text-xs bg-green-100 px-3 py-1 rounded-full">Sukses</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 hover:bg-blue-50 rounded-lg transition-colors border-l-4 border-blue-500 bg-gray-50/50">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center text-lg">🏦</div>
+                                <div>
+                                    <p class="font-semibold text-gray-800 text-sm">Topup DANA 25.000</p>
+                                    <p class="text-xs text-gray-500">User: 0819****4421 • 12 detik lalu</p>
+                                </div>
+                            </div>
+                            <span class="text-green-600 font-bold text-xs bg-green-100 px-3 py-1 rounded-full">Sukses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Analysis Box (Candlestick Merah/Hijau) -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Analisis Tren Mingguan</h3>
+                            <p class="text-xs text-gray-500 mt-1">Aktivitas transaksi 7 hari terakhir</p>
+                        </div>
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- CSS Chart (Candlestick / Active Trend Indicator) -->
+                    <div class="flex-grow flex items-end justify-between gap-1 sm:gap-2 min-h-[180px] h-48 mt-2 mb-2 pb-2 border-b border-gray-100 relative">
+                        <!-- Garis panduan background (opsional) -->
+                        <div class="absolute w-full border-t border-dashed border-gray-200 bottom-[25%] -z-10"></div>
+                        <div class="absolute w-full border-t border-dashed border-gray-200 bottom-[50%] -z-10"></div>
+                        <div class="absolute w-full border-t border-dashed border-gray-200 bottom-[75%] -z-10"></div>
+
+                        <!-- Senin (Merah/Turun) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-red-300 bottom-6 wick-grow" style="height: 50%;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-red-600 to-red-400 rounded-sm relative hover:from-red-500 hover:to-red-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(239,68,68,0.4)]" style="height: 35%;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">1.2K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Sen</span>
+                        </div>
+
+                        <!-- Selasa (Hijau/Naik) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-green-300 bottom-6 wick-grow" style="height: 65%; animation-delay: 0.1s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-green-600 to-green-400 rounded-sm relative hover:from-green-500 hover:to-green-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(34,197,94,0.4)]" style="height: 50%; animation-delay: 0.1s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">1.8K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Sel</span>
+                        </div>
+
+                        <!-- Rabu (Merah/Turun) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-red-300 bottom-6 wick-grow" style="height: 55%; animation-delay: 0.2s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-red-600 to-red-400 rounded-sm relative hover:from-red-500 hover:to-red-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(239,68,68,0.4)]" style="height: 40%; animation-delay: 0.2s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">1.5K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Rab</span>
+                        </div>
+
+                        <!-- Kamis (Hijau/Naik) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-green-300 bottom-6 wick-grow" style="height: 80%; animation-delay: 0.3s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-green-600 to-green-400 rounded-sm relative hover:from-green-500 hover:to-green-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(34,197,94,0.4)]" style="height: 65%; animation-delay: 0.3s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">2.4K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Kam</span>
+                        </div>
+
+                        <!-- Jumat (Hijau/Naik) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-green-300 bottom-6 wick-grow" style="height: 90%; animation-delay: 0.4s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-green-600 to-green-400 rounded-sm relative hover:from-green-500 hover:to-green-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(34,197,94,0.4)]" style="height: 75%; animation-delay: 0.4s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">2.9K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Jum</span>
+                        </div>
+
+                        <!-- Sabtu (Hijau/Peak) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-green-400 bottom-6 wick-grow" style="height: 100%; animation-delay: 0.5s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-green-500 to-green-300 rounded-sm relative hover:from-green-400 hover:to-green-200 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_15px_rgba(34,197,94,0.7)] ring-2 ring-green-100 ring-offset-1" style="height: 90%; animation-delay: 0.5s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">3.5K</div>
+                            </div>
+                            <span class="text-[10px] text-green-600 mt-2 font-bold h-4">Sab</span>
+                        </div>
+
+                        <!-- Minggu (Merah/Turun) -->
+                        <div class="w-full flex flex-col justify-end items-center group h-full relative">
+                            <div class="absolute w-0.5 bg-red-300 bottom-6 wick-grow" style="height: 70%; animation-delay: 0.6s;"></div>
+                            <div class="w-full max-w-[12px] sm:max-w-[18px] bg-gradient-to-t from-red-600 to-red-400 rounded-sm relative hover:from-red-500 hover:to-red-300 transition-colors cursor-pointer bar-grow z-10 shadow-[0_0_8px_rgba(239,68,68,0.4)]" style="height: 55%; animation-delay: 0.6s;">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">2.1K</div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 mt-2 font-medium h-4">Min</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Insight Footer -->
+                    <div class="mt-4 bg-gray-50 p-3 rounded-lg flex items-center justify-between border border-gray-100">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-green-500 shadow-sm text-sm border border-gray-100">💡</div>
+                            <div>
+                                <p class="text-[11px] text-gray-500 font-medium tracking-wide uppercase">Insight Sistem</p>
+                                <p class="text-xs font-bold text-gray-800">Transaksi aktif naik <span class="text-green-600">15%</span> di akhir pekan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (List Harga Produk PPOB) -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">Daftar Harga</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Harga Modal PPOB Termurah</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Bandingkan dan buktikan sendiri. Kami memberikan harga dasar terbaik untuk memaksimalkan margin keuntungan Anda.
+                </p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <button class="px-6 py-2 bg-blue-600 text-white rounded-full font-medium shadow-md transition-all">Pulsa Reguler</button>
+                <button class="px-6 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full font-medium transition-all">Paket Data</button>
+                <button class="px-6 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full font-medium transition-all">Token PLN</button>
+                <button class="px-6 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-full font-medium transition-all">E-Wallet</button>
+            </div>
+
+            <!-- Pricing Table -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden slide-in">
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full whitespace-nowrap">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100 text-left">
+                                <th class="px-6 py-4 font-semibold text-gray-700">Kode</th>
+                                <th class="px-6 py-4 font-semibold text-gray-700">Produk / Nominal</th>
+                                <th class="px-6 py-4 font-semibold text-gray-700">Harga Modal</th>
+                                <th class="px-6 py-4 font-semibold text-gray-700">Harga Jual (Saran)</th>
+                                <th class="px-6 py-4 font-semibold text-gray-700 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-blue-50/50 transition-colors">
+                                <td class="px-6 py-4 text-gray-500 font-mono text-sm">TSEL5</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs mr-3">T</div>
+                                        <span class="font-medium text-gray-800">Telkomsel 5.000</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">Rp 5.350</td>
+                                <td class="px-6 py-4 font-medium text-blue-600">Rp 7.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">Lancar</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50 transition-colors">
+                                <td class="px-6 py-4 text-gray-500 font-mono text-sm">TSEL10</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs mr-3">T</div>
+                                        <span class="font-medium text-gray-800">Telkomsel 10.000</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">Rp 10.250</td>
+                                <td class="px-6 py-4 font-medium text-blue-600">Rp 12.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">Lancar</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50 transition-colors">
+                                <td class="px-6 py-4 text-gray-500 font-mono text-sm">ISAT10</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center font-bold text-xs mr-3">I</div>
+                                        <span class="font-medium text-gray-800">Indosat 10.000</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">Rp 10.300</td>
+                                <td class="px-6 py-4 font-medium text-blue-600">Rp 12.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">Lancar</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50 transition-colors">
+                                <td class="px-6 py-4 text-gray-500 font-mono text-sm">XL25</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs mr-3">X</div>
+                                        <span class="font-medium text-gray-800">XL Axiata 25.000</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">Rp 24.850</td>
+                                <td class="px-6 py-4 font-medium text-blue-600">Rp 27.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">Lancar</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-blue-50/50 transition-colors">
+                                <td class="px-6 py-4 text-gray-500 font-mono text-sm">PLN20</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center font-bold text-xs mr-3">⚡</div>
+                                        <span class="font-medium text-gray-800">Token Listrik 20.000</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-bold text-gray-800">Rp 20.150</td>
+                                <td class="px-6 py-4 font-medium text-blue-600">Rp 22.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-bold">Lancar</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-gray-50 p-4 border-t border-gray-100 text-center">
+                    <p class="text-sm text-gray-500 italic">*Harga dapat berubah sewaktu-waktu mengikuti kebijakan provider.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="https://black463.github.io/payment.io/playstore.html" class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                    Lihat Seluruh Daftar Harga di Aplikasi
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
+    <section id="features" class="py-20 bg-gray-50 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Mengapa Pilih NR Payment?</h2>
@@ -295,7 +663,7 @@
             </div>
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="card-3d bg-white p-8 rounded-2xl border border-blue-100 bounce-in" style="animation-delay: 0.2s;">
+                <div class="card-3d bg-white p-8 rounded-2xl shadow-lg border border-gray-100 bounce-in" style="animation-delay: 0.2s;">
                     <div class="text-6xl feature-icon mb-6 wave-animation">🚀</div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Transaksi Instan</h3>
                     <p class="text-gray-600 leading-relaxed">
@@ -304,7 +672,7 @@
                     </p>
                 </div>
                 
-                <div class="card-3d bg-white p-8 rounded-2xl border border-blue-100 bounce-in" style="animation-delay: 0.4s;">
+                <div class="card-3d bg-white p-8 rounded-2xl shadow-lg border border-gray-100 bounce-in" style="animation-delay: 0.4s;">
                     <div class="text-6xl feature-icon mb-6 floating">🔒</div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Keamanan Terjamin</h3>
                     <p class="text-gray-600 leading-relaxed">
@@ -313,7 +681,7 @@
                     </p>
                 </div>
                 
-                <div class="card-3d bg-white p-8 rounded-2xl border border-blue-100 bounce-in" style="animation-delay: 0.6s;">
+                <div class="card-3d bg-white p-8 rounded-2xl shadow-lg border border-gray-100 bounce-in" style="animation-delay: 0.6s;">
                     <div class="text-6xl mb-6">💰</div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Komisi Terbaik</h3>
                     <p class="text-gray-600 leading-relaxed">
@@ -326,7 +694,7 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-50">
+    <section id="services" class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Layanan Lengkap PPOB</h2>
@@ -334,49 +702,49 @@
             </div>
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.1s;">⚡</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Listrik PLN</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Token listrik & tagihan bulanan</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.2s;">📱</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Pulsa & Data</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Semua operator Indonesia</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.3s;">💧</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Air PDAM</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Tagihan air seluruh Indonesia</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.4s;">📺</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">TV Berlangganan</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">IndiHome, First Media, dll</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.5s;">🎮</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Game Online</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Voucher game populer</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.6s;">🏦</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">E-Wallet</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Top up GoPay, OVO, DANA</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.7s;">🚗</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Transportasi</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Tiket kereta, pesawat, bus</p>
                 </div>
                 
-                <div class="bg-white p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-blue-50">
+                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div class="text-3xl sm:text-4xl mb-3 sm:mb-4 bounce-in" style="animation-delay: 0.8s;">📄</div>
                     <h3 class="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Asuransi</h3>
                     <p class="text-gray-600 text-xs sm:text-sm">Pembayaran premi asuransi</p>
@@ -386,7 +754,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-gray-50 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Apa Kata Mitra Kami?</h2>
@@ -394,7 +762,7 @@
             </div>
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.1s;">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.1s;">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
                             <span class="text-blue-600 font-bold text-lg">BU</span>
@@ -412,7 +780,7 @@
                     </p>
                 </div>
                 
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.3s;">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.3s;">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
                             <span class="text-green-600 font-bold text-lg">AG</span>
@@ -430,7 +798,7 @@
                     </p>
                 </div>
                 
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.5s;">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 bounce-in" style="animation-delay: 0.5s;">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
                             <span class="text-purple-600 font-bold text-lg">RI</span>
@@ -452,70 +820,58 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Pertanyaan yang Sering Diajukan</h2>
                 <p class="text-lg sm:text-xl text-gray-600">Temukan jawaban untuk pertanyaan umum seputar NR Payment</p>
             </div>
             
-            <div class="space-y-6">
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden">
-                    <button class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-blue-50 transition-colors faq-toggle">
+            <div class="space-y-4">
+                <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-gray-100 transition-colors faq-toggle">
                         <span class="font-semibold text-gray-800">Bagaimana cara mendaftar sebagai mitra NR Payment?</span>
                         <svg class="w-5 h-5 text-blue-600 transform transition-transform faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="px-8 pb-6 text-gray-600 leading-relaxed faq-content" style="display: none;">
+                    <div class="px-8 pb-6 pt-2 text-gray-600 leading-relaxed faq-content" style="display: none;">
                         Pendaftaran sangat mudah! Cukup klik tombol "Daftar Sekarang", isi formulir dengan data lengkap, upload dokumen yang diperlukan, dan tunggu verifikasi maksimal 1x24 jam. Setelah disetujui, Anda langsung bisa mulai berbisnis PPOB.
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden">
-                    <button class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-blue-50 transition-colors faq-toggle">
+                <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-gray-100 transition-colors faq-toggle">
                         <span class="font-semibold text-gray-800">Berapa modal awal yang dibutuhkan?</span>
                         <svg class="w-5 h-5 text-blue-600 transform transition-transform faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="px-8 pb-6 text-gray-600 leading-relaxed faq-content" style="display: none;">
+                    <div class="px-8 pb-6 pt-2 text-gray-600 leading-relaxed faq-content" style="display: none;">
                         Tidak ada biaya pendaftaran! Anda hanya perlu deposit minimal Rp 100.000 untuk mulai bertransaksi. Deposit ini akan menjadi saldo Anda untuk melakukan transaksi PPOB. Semakin besar deposit, semakin banyak transaksi yang bisa dilakukan.
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden">
-                    <button class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-blue-50 transition-colors faq-toggle">
+                <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-gray-100 transition-colors faq-toggle">
                         <span class="font-semibold text-gray-800">Bagaimana sistem komisi dan pembayarannya?</span>
                         <svg class="w-5 h-5 text-blue-600 transform transition-transform faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="px-8 pb-6 text-gray-600 leading-relaxed faq-content" style="display: none;">
+                    <div class="px-8 pb-6 pt-2 text-gray-600 leading-relaxed faq-content" style="display: none;">
                         Komisi langsung masuk ke saldo Anda setiap kali transaksi berhasil. Besaran komisi bervariasi tergantung jenis produk, mulai dari Rp 500 - Rp 5.000 per transaksi. Anda bisa tarik saldo kapan saja ke rekening bank dengan minimal penarikan Rp 50.000.
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden">
-                    <button class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-blue-50 transition-colors faq-toggle">
-                        <span class="font-semibold text-gray-800">Apakah ada dukungan teknis dan pelatihan?</span>
-                        <svg class="w-5 h-5 text-blue-600 transform transition-transform faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div class="px-8 pb-6 text-gray-600 leading-relaxed faq-content" style="display: none;">
-                        Tentu! Kami menyediakan customer service 24/7 melalui WhatsApp, telepon, dan email. Ada juga pelatihan gratis untuk mitra baru, panduan lengkap, dan webinar rutin untuk meningkatkan skill bisnis PPOB Anda.
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden">
-                    <button class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-blue-50 transition-colors faq-toggle">
+                <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-gray-100 transition-colors faq-toggle">
                         <span class="font-semibold text-gray-800">Bagaimana jika terjadi transaksi gagal atau pending?</span>
                         <svg class="w-5 h-5 text-blue-600 transform transition-transform faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div class="px-8 pb-6 text-gray-600 leading-relaxed faq-content" style="display: none;">
+                    <div class="px-8 pb-6 pt-2 text-gray-600 leading-relaxed faq-content" style="display: none;">
                         Jangan khawatir! Sistem kami memiliki auto-refund untuk transaksi gagal. Saldo akan otomatis kembali dalam 5-10 menit. Untuk transaksi pending, tim teknis kami akan menangani maksimal 2x24 jam. Anda juga bisa langsung hubungi customer service untuk penanganan lebih cepat.
                     </div>
                 </div>
@@ -527,7 +883,7 @@
     <section class="py-20 gradient-bg relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
                 Siap Memulai Bisnis PPOB Anda?
             </h2>
             <p class="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
@@ -535,10 +891,10 @@
                 berbisnis PPOB bersama NR Payment
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://black463.github.io/payment.io/playstore.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 pulse-glow bounce-in text-center">
+                <a href="https://black463.github.io/payment.io/playstore.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-all duration-300 pulse-glow bounce-in text-center shadow-lg">
                     Daftar Gratis Sekarang
                 </a>
-                <button class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 wave-animation">
+                <button class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 wave-animation backdrop-blur-sm">
                     Hubungi Tim Kami
                 </button>
             </div>
@@ -551,47 +907,45 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center space-x-2 mb-6">
-                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">NR</span>
-                        </div>
+                        <img src="https://indonesiafamilymanajemenfamily.wordpress.com/wp-content/uploads/2026/06/file_000000009f2071f5b88a12b7b086e5b03986179164258528929.png" alt="NR Payment Logo" class="w-10 h-10 object-contain rounded-lg bg-white p-0.5">
                         <span class="text-xl font-bold">NR Payment</span>
                     </div>
-                    <p class="text-gray-400 leading-relaxed">
-                        Solusi PPOB terdepan untuk kemudahan transaksi digital Anda.
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Solusi PPOB terdepan untuk kemudahan transaksi digital Anda. Cepat, Aman, dan Menguntungkan.
                     </p>
                 </div>
                 
                 <div>
-                    <h3 class="font-semibold mb-4">Layanan</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Listrik PLN</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Pulsa & Data</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Air PDAM</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">TV Berlangganan</a></li>
+                    <h3 class="font-semibold mb-4 text-gray-100">Layanan</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Listrik PLN</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Pulsa & Data</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Air PDAM</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">E-Wallet</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="font-semibold mb-4">Perusahaan</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Karir</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-blue-300 transition-colors">Kontak</a></li>
+                    <h3 class="font-semibold mb-4 text-gray-100">Perusahaan</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Tentang Kami</a></li>
+                        <li><a href="#pricing" class="hover:text-blue-400 transition-colors">Daftar Harga</a></li>
+                        <li><a href="#dashboard" class="hover:text-blue-400 transition-colors">Akses Dasbor</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400 transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="font-semibold mb-4">Kontak</h3>
-                    <div class="space-y-2 text-gray-400">
-                        <p>📧 info@nrpayment.com</p>
-                        <p>📞 +62 823 3916 2744</p>
-                        <p>📍 Aceh, Indonesia</p>
+                    <h3 class="font-semibold mb-4 text-gray-100">Kontak</h3>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <p class="flex items-center"><span class="mr-2">📧</span> info@nrpayment.com</p>
+                        <p class="flex items-center"><span class="mr-2">📞</span> +62 823 3916 2744</p>
+                        <p class="flex items-center"><span class="mr-2">📍</span> Aceh, Indonesia</p>
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
                 <p>&copy; 2024 NR Payment. Semua hak dilindungi.</p>
             </div>
         </div>
@@ -647,11 +1001,13 @@
         // Add scroll effect to navigation and back to top button
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.classList.add('bg-white/95');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/95', 'shadow-sm');
+                nav.classList.remove('bg-white/90');
                 backToTopButton.classList.add('show');
             } else {
-                nav.classList.remove('bg-white/95');
+                nav.classList.add('bg-white/90');
+                nav.classList.remove('bg-white/95', 'shadow-sm');
                 backToTopButton.classList.remove('show');
             }
         });
@@ -667,12 +1023,13 @@
                 if (entry.isIntersecting) {
                     entry.target.style.animationDelay = '0.2s';
                     entry.target.classList.add('slide-in');
+                    observer.unobserve(entry.target); // Stop observing once animated
                 }
             });
         }, observerOptions);
 
-        // Observe all cards and sections
-        document.querySelectorAll('.card-3d, section > div > div').forEach(el => {
+        // Observe elements
+        document.querySelectorAll('.card-3d, .slide-in').forEach(el => {
             observer.observe(el);
         });
 
@@ -685,14 +1042,18 @@
                 if (content.style.display === 'none' || content.style.display === '') {
                     content.style.display = 'block';
                     icon.style.transform = 'rotate(180deg)';
-                    this.classList.add('bg-blue-50');
+                    this.parentElement.classList.add('bg-blue-50/30', 'border-blue-200');
+                    this.classList.add('bg-blue-50/50');
                 } else {
                     content.style.display = 'none';
                     icon.style.transform = 'rotate(0deg)';
-                    this.classList.remove('bg-blue-50');
+                    this.parentElement.classList.remove('bg-blue-50/30', 'border-blue-200');
+                    this.classList.remove('bg-blue-50/50');
                 }
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e82a1bc6b43104',t:'MTc1Nzc3MTk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
+
+
